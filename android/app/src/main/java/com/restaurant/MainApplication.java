@@ -1,4 +1,4 @@
-package com.payentapp;
+package com.restaurant;
 
 import android.app.Application;
 

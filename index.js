@@ -5,4 +5,4 @@ import {
 
 import App from "./app/index"
 
-AppRegistry.registerComponent('payentApp', () => App);
+AppRegistry.registerComponent('restaurant', () => App);
