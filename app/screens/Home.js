@@ -1,10 +1,13 @@
 import React from 'react';
 import {ActivityIndicator, ScrollView, Text, TouchableWithoutFeedback, View} from 'react-native';
-import {Card, Header, List, ListItem} from "react-native-elements";
+import {Card, Header, List, ListItem, Button} from "react-native-elements";
+import {TextInput} from "react-native";
 import {UIConstants} from "../UIConstants";
 import {BillService} from "../services/BillService";
 import {UserProfileService} from "../services/UserProfileService";
 import BillList from "../components/BillList";
+import {AccountService} from "../services/AccountService";
+import PopupDialog from 'react-native-popup-dialog';
 
 export default class Home extends React.Component {
 
@@ -18,6 +21,7 @@ export default class Home extends React.Component {
         this.state.me = {};
         this.state.myPeers = [];
         this.state.myDependents = [];
+        this.state.helloWorldTitle = "init";
     }
 
     //==================================================================================================================
@@ -61,6 +65,12 @@ export default class Home extends React.Component {
     render() {
         console.log("Home.render");
         return this.state.error ? this._renderError() : (this.state.profile ? this._renderLoaded() : this._renderLoading());
+    }
+
+    changePopUpTile(message) {
+        this.setState({
+            helloWorldTitle: message
+        })
     }
 
     _renderHeader() {
@@ -144,6 +154,28 @@ export default class Home extends React.Component {
                             />
                         </List>
                     </Card>
+                    <Button
+                        backgroundColor={UIConstants.BG_COLOR_1}
+                        title="HELLO WORLD"
+                        onPress={() => AccountService.helloWorld()
+                            .then(res => {
+                                this.changePopUpTile(res.message);
+                                this.popupDialog.show();
+                                // show it here
+                            })
+                            .catch(err => {
+                                alert(err);
+                            })}
+                    />
+                    <PopupDialog
+                        ref={(popupDialog) => {
+                            this.popupDialog = popupDialog;
+                        }}
+                    >
+                        <View>
+                            <Text>{this.state.helloWorldTitle}</Text>
+                        </View>
+                    </PopupDialog>
 
 
 

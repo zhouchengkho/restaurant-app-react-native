@@ -13,12 +13,12 @@ import {
 // Constants
 
 const AWS_COGNITO_SETTINGS = {
-    UserPoolId: '',
-    ClientId: '',
-    IdentityPoolId: ''
+    UserPoolId: 'us-east-1_2eDOjYE5q',
+    ClientId: '5pa9u5in9k01jh70huavloe8am',
+    IdentityPoolId: 'us-east-1:f77b6fbf-0579-45dc-9332-6d5cd7bfe2bb'
 };
 
-const API_BASE = '';
+const API_BASE = 'https://aenuucirl6.execute-api.us-east-1.amazonaws.com/prod';
 
 // Store keys
 export const SK_ID_TOKEN = "id_token";
@@ -401,6 +401,15 @@ class AccountServiceImpl {
             // });
             resolve({});
         });
+    }
+
+    helloWorld() {
+        // TODO: use fetch to send API call to /GET helloworld
+        return new Promise((resolve, reject) => {
+            resolve({
+                message: 'implement this with fetch'
+            })
+        })
     }
 
 }
