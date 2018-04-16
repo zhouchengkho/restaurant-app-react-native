@@ -8,6 +8,7 @@ import {UserProfileService} from "../services/UserProfileService";
 import BillList from "../components/BillList";
 import {AccountService} from "../services/AccountService";
 import PopupDialog from 'react-native-popup-dialog';
+//import ChatBot from 'react-native-chatbot';
 
 export default class Home extends React.Component {
 
@@ -121,7 +122,6 @@ export default class Home extends React.Component {
                 {this._renderHeader()}
 
                 <ScrollView contentContainerStyle={{paddingBottom: 100}}>
-
                     <Card title={this.state.profile.given_name + " " + this.state.profile.family_name}>
                         <TouchableWithoutFeedback
                             onPress={() => this.props.navigation.navigate("UserView", {user: this.state.me})}

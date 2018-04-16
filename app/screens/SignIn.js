@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View} from "react-native";
 import {Card, Button, FormInput, FormValidationMessage, Header} from "react-native-elements";
 import {
-    AccountService, F_USERNAME, F_PASSWORD, AWS_USER_NOT_CONFIRMED, F_PIN,
+    AccountService, F_USERNAME, F_PASSWORD, F_U, AWS_USER_NOT_CONFIRMED, F_PIN,
     ERR_USER_NOT_CONFIRMED
 } from "../services/AccountService";
 import {UIConstants} from "../UIConstants";
@@ -20,6 +20,7 @@ export default class SignIn extends React.Component {
         if (props.navigation.state.params) {
             this.state[F_USERNAME] = props.navigation.state.params[F_USERNAME];
             this.state[F_PASSWORD] = props.navigation.state.params[F_PASSWORD];
+            this.state[F_U] = props.navigation.state.params[F_U];
         }
     }
 
@@ -41,7 +42,8 @@ export default class SignIn extends React.Component {
                 if (errors[F_PIN] === ERR_USER_NOT_CONFIRMED) {
                     this.props.navigation.navigate("Verification", {
                         [F_USERNAME]: this.state[F_USERNAME],
-                        [F_PASSWORD]: this.state[F_PASSWORD]
+                        [F_PASSWORD]: this.state[F_PASSWORD],
+                        [F_U]: this.state[F_U]
                     });
                 }
                 // if other error assume it's input error
@@ -77,8 +79,8 @@ export default class SignIn extends React.Component {
                             keyboardType="email-address"
                             autoCapitalize="none"
                             autoCorrect={false}
-                            placeholder="Email address or phone number"
-                            value={this.state[F_USERNAME]}
+                            placeholder="Email address or username"
+                            value={this.state[F_U]}
                             disabled={this.state.disabled}
                             onChangeText={(val) => {
                                 this.setState({[F_USERNAME]: val});
@@ -121,8 +123,9 @@ export default class SignIn extends React.Component {
                             textStyle={{color: "#bcbec1"}}
                             title="Sign Up"
                             onPress={() => this.props.navigation.navigate("SignUp", {
-                                [F_USERNAME]: this.state[F_USERNAME],
-                                [F_PASSWORD]: this.state[F_PASSWORD]
+                                //[F_USERNAME]: this.state[F_USERNAME],
+                                //[F_PASSWORD]: this.state[F_PASSWORD],
+                                //[F_U]: this.state[F_U]
                             })}
                         />
                     </Card>

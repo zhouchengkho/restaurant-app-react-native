@@ -49,17 +49,20 @@ export const F_USERNAME = "username";
 export const F_PASSWORD = "password";
 export const F_GIVEN_NAME = "given_name";
 export const F_FAMILY_NAME = "family_name";
+export const F_U = "user";
 export const F_PIN = "pin";
 
 
 //======================================================================================================================
 // Validation
 const _VALIDATE_EMAIL = (email) => {
-    return email && validator.isEmail(email) ? null : ERR_INVALID_USERNAME;
+    //return email && validator.isEmail(email) ? null : ERR_INVALID_USERNAME;
+    return null;
 };
 
 const _VALIDATE_PASSWORD = (password) => {
-    return password && validator.isLength(password, 8) ? null : ERR_INVALID_PASSWORD;
+    //return password && validator.isLength(password, 8) ? null : ERR_INVALID_PASSWORD;
+    return null;
 }
 
 const VALIDATE_NEW_ACCOUNT_DICT = (given_name, family_name, username, password) => {
@@ -97,8 +100,7 @@ const VALIDATE_LOGIN = (username, password) => {
 class AccountServiceImpl {
 
     constructor() {
-        // this._userPool = new CognitoUserPool(AWS_COGNITO_SETTINGS);
-        this._userPool = {};
+        this._userPool = new CognitoUserPool(AWS_COGNITO_SETTINGS);
         this._session = {
             registered: false,
             confirmed: false,
@@ -185,133 +187,134 @@ class AccountServiceImpl {
         });
     }
 
-    signUp(given_name, family_name, username, password) {
+    signUp(user, given_name, family_name, username, password) {
         return new Promise((resolve, reject) => {
-            // // Validate
-            // let errors = VALIDATE_NEW_ACCOUNT_DICT(given_name, family_name, username, password);
-            //
-            // // if not created, reject
-            // if (errors) {
-            //     reject(errors);
-            //     return;
-            // }
-            //
-            // // Connect
-            // const attributeList = [
-            //     new CognitoUserAttribute({Name: 'given_name', Value: given_name}),
-            //     new CognitoUserAttribute({Name: 'family_name', Value: family_name})
-            // ];
-            //
-            // console.log("AccountService.asyncSignUp - calling service...");
-            //
-            // this._userPool.signUp(username, password, attributeList, null, (err, result) => {
-            //         if (err) {
-            //             if (err.code === AWS_USERNAME_EXISTS) {
-            //                 reject({[F_USERNAME]: ERR_USERNAME_ALREADY_EXISTS});
-            //             } else if (err.code === AWS_INVALID_PASSWORD) {
-            //                 reject({[F_PASSWORD]: ERR_INVALID_PASSWORD});
-            //             } else {
-            //                 alert(err.code + ": " + err.message);
-            //                 reject(err);
-            //             }
-            //             return;
-            //         }
-            //
-            //
-            //         this._session.registered = true;
-            //         // Move to validation screen
-            //         resolve(result);
-            //     }
-            // );
-            resolve({
+            // Validate
+            let errors = VALIDATE_NEW_ACCOUNT_DICT(given_name, family_name, username, password);
 
-            });
+            // if not created, reject
+            if (errors) {
+                reject(errors);
+                return;
+            }
+            // Connect
+            const attributeList = [
+                new CognitoUserAttribute({Name: 'given_name', Value: given_name}),
+                new CognitoUserAttribute({Name: 'family_name', Value: family_name}),
+                new CognitoUserAttribute({Name: 'email', Value: username})
+            ];
+
+            console.log("AccountService.asyncSignUp - calling service...");
+            console.log(username);
+
+            this._userPool.signUp(user, password, attributeList, null, (err, result) => {
+                    if (err) {
+                        if (err.code === AWS_USERNAME_EXISTS) {
+                            reject({[F_USERNAME]: ERR_USERNAME_ALREADY_EXISTS});
+                        } else if (err.code === AWS_INVALID_PASSWORD) {
+                            reject({[F_PASSWORD]: ERR_INVALID_PASSWORD});
+                        } else {
+                            alert(err.code + ": " + err.message);
+                            reject(err);
+                        }
+                        return;
+                    }
+
+
+                    this._session.registered = true;
+                    // Move to validation screen
+                    resolve(result);
+                }
+            );
+            //resolve({
+
+            //});
         });
     }
 
     signIn(username, password) {
         return new Promise((resolve, reject) => {
-            // console.log("AccountService.signIn");
-            //
-            // // Validate
-            // let errors = VALIDATE_LOGIN(username, password);
-            //
-            // if (errors) {
-            //     reject(errors);
-            //     return;
-            // }
-            //
-            // // No errors - proceed
-            // const authDetails = new AuthenticationDetails({
-            //     Username: username,
-            //     Password: password
-            // });
-            //
-            // const cognitoUser = new CognitoUser({
-            //     Username: username,
-            //     Pool: this._userPool
-            // });
-            //
-            //
-            // cognitoUser.authenticateUser(authDetails, {
-            //     onSuccess: (result) => {
-            //         console.log("AccountService.signIn authenticated user");
-            //
-            //         // Update session
-            //         this._session.user = cognitoUser;
-            //         this._getSession(cognitoUser)//
-            //             .then(session => resolve(session))//
-            //             .catch(err => reject(err));
-            //     },
-            //     onFailure: (err) => {
-            //         if (err.code === AWS_USER_NOT_FOUND) {
-            //             reject({[F_USERNAME]: ERR_USER_NOT_FOUND});
-            //         } else if (err.code === AWS_USER_NOT_CONFIRMED) {
-            //             reject({[F_PIN]: ERR_USER_NOT_CONFIRMED});
-            //         } else if (err.code === AWS_NOT_AUTHORIZED_EXCEPTION) {
-            //             reject({[F_PASSWORD]: ERR_NOT_AUTHORIZED});
-            //         } else {
-            //             alert(err.code + ": " + err.message);
-            //             reject(err);
-            //         }
-            //     }
-            // });
-            resolve({});
+            console.log("AccountService.signIn");
+
+            // Validate
+            let errors = VALIDATE_LOGIN(username, password);
+
+            if (errors) {
+                reject(errors);
+                return;
+            }
+
+            // No errors - proceed
+            const authDetails = new AuthenticationDetails({
+                Username: username,
+                Password: password
+            });
+
+            const cognitoUser = new CognitoUser({
+                Username: username,
+                Pool: this._userPool
+            });
+
+
+            cognitoUser.authenticateUser(authDetails, {
+                onSuccess: (result) => {
+                    console.log("AccountService.signIn authenticated user");
+
+                    // Update session
+                    this._session.user = cognitoUser;
+                    this._getSession(cognitoUser)//
+                        .then(session => resolve(session))//
+                        .catch(err => reject(err));
+                },
+                onFailure: (err) => {
+                    if (err.code === AWS_USER_NOT_FOUND) {
+                        reject({[F_USERNAME]: ERR_USER_NOT_FOUND});
+                    } else if (err.code === AWS_USER_NOT_CONFIRMED) {
+                        reject({[F_PIN]: ERR_USER_NOT_CONFIRMED});
+                    } else if (err.code === AWS_NOT_AUTHORIZED_EXCEPTION) {
+                        reject({[F_PASSWORD]: ERR_NOT_AUTHORIZED});
+                    } else {
+                        alert(err.code + ": " + err.message);
+                        reject(err);
+                    }
+                }
+            });
+            //resolve({});
         });
     }
 
     confirmRegistration(username, code) {
         return new Promise((resolve, reject) => {
-            // console.log("AccountService.resendConfirmationCode");
-            //
-            // // Authenticate
-            // const cognitoUser = new CognitoUser({
-            //     Username: username,
-            //     Pool: this._userPool
-            // });
-            //
-            // // Confirm registration
-            // cognitoUser.confirmRegistration(code, true, (err, result) => {
-            //     if (err) {
-            //         if (err.code === AWS_CODE_MISMATCH_EXCEPTION) {
-            //             reject({[F_PIN]: ERR_CODE_MISMATCH});
-            //         } else if (err.code === AWS_INVALID_PARAMETER_EXCEPTION) {
-            //             reject({[F_PIN]: ERR_INVALID_CODE});
-            //         } else if (err.code === AWS_MISSING_REQUIRED_PARAMETER) {
-            //             reject({[F_PIN]: ERR_INVALID_CODE});
-            //         } else {
-            //             alert(err.code + ": " + err.message);
-            //             reject(err);
-            //         }
-            //         return;
-            //     }
-            //
-            //     // Update session
-            //     this._session.confirmed = true;
-            //     // Callback
-            //     resolve(result);
-            //});
-            resolve({});
+            console.log("AccountService.resendConfirmationCode");
+
+            // Authenticate
+            const cognitoUser = new CognitoUser({
+                Username: username,
+                Pool: this._userPool
+            });
+
+            // Confirm registration
+            cognitoUser.confirmRegistration(code, true, (err, result) => {
+                if (err) {
+                    if (err.code === AWS_CODE_MISMATCH_EXCEPTION) {
+                        reject({[F_PIN]: ERR_CODE_MISMATCH});
+                    } else if (err.code === AWS_INVALID_PARAMETER_EXCEPTION) {
+                        reject({[F_PIN]: ERR_INVALID_CODE});
+                    } else if (err.code === AWS_MISSING_REQUIRED_PARAMETER) {
+                        reject({[F_PIN]: ERR_INVALID_CODE});
+                    } else {
+                        alert(err.code + ": " + err.message);
+                        reject(err);
+                    }
+                    return;
+                }
+
+                // Update session
+                this._session.confirmed = true;
+                // Callback
+                resolve(result);
+            });
+            //resolve({});
         });
     };
 
@@ -349,15 +352,15 @@ class AccountServiceImpl {
 
     confirmResetPassword(username, pin, newPassword){
         return new Promise((resolve, reject) => {
-           fetch(API_BASE + "/auth/confirmPassword", {
-               method: "POST",
-               body: JSON.stringify({"username": username, "code": pin, "password": newPassword}),
-               headers: {"Content-Type": "application/json"},
-           }).then(response => {
-               resolve(response.json());
-           }).catch(err=> {
-               reject(err);
-           });
+            fetch(API_BASE + "/auth/confirmPassword", {
+                method: "POST",
+                body: JSON.stringify({"username": username, "code": pin, "password": newPassword}),
+                headers: {"Content-Type": "application/json"},
+            }).then(response => {
+                resolve(response.json());
+            }).catch(err=> {
+                reject(err);
+            });
         });
     }
 
@@ -404,12 +407,17 @@ class AccountServiceImpl {
     }
 
     helloWorld() {
-        // TODO: use fetch to send API call to /GET helloworld
         return new Promise((resolve, reject) => {
-            resolve({
-                message: 'implement this with fetch'
-            })
-        })
+            fetch(API_BASE + "/helloworld", {
+                method: "GET",
+                // body: JSON.stringify({"username": username}),
+                headers: {"Content-Type": "application/json"},
+            }).then(response => {
+                resolve(response['_bodyText']);
+            }).catch(err=> {
+                reject(err);
+            });
+        });
     }
 
 }

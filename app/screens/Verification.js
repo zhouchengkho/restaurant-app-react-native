@@ -1,7 +1,7 @@
 import React from "react";
 import {View} from "react-native";
 import {Card, Button, FormLabel, FormInput, FormValidationMessage, Header} from "react-native-elements";
-import {AccountService, F_PIN, F_USERNAME, F_PASSWORD} from "../services/AccountService";
+import {AccountService, F_PIN, F_USERNAME, F_PASSWORD, F_U} from "../services/AccountService";
 import {UIConstants} from "../UIConstants";
 
 export default class Verification extends React.Component {
@@ -17,6 +17,7 @@ export default class Verification extends React.Component {
         this.state.verificationLoading = false;
         this.state[F_USERNAME] = props.navigation.state.params[F_USERNAME];
         this.state[F_PASSWORD] = props.navigation.state.params[F_PASSWORD];
+        this.state[F_U] = props.navigation.state.params[F_U];
     }
 
     //==================================================================================================================
@@ -28,13 +29,14 @@ export default class Verification extends React.Component {
     }
 
     _doVerification() {
-        AccountService.confirmRegistration(this.state[F_USERNAME], this.state[F_PIN])
+        AccountService.confirmRegistration(this.state[F_U], this.state[F_PIN])
         //
             .then(res => {
                 alert("Verification successful");
                 this.props.navigation.navigate("SignIn", {
                     [F_USERNAME]: this.state[F_USERNAME],
-                    [F_PASSWORD]: this.state[F_PASSWORD]
+                    [F_PASSWORD]: this.state[F_PASSWORD],
+                    [F_U]: this.state[F_U]
                 });
             })
             //
