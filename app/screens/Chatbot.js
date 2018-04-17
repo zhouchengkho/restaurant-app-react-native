@@ -9,10 +9,6 @@ import {
 import {GiftedChat, Actions, Bubble, SystemMessage} from 'react-native-gifted-chat';
 import CustomActions from './CustomActions';
 import CustomView from './CustomView';
-import {UIConstants} from "../UIConstants";
-import {Card, Header, List, ListItem, Button} from "react-native-elements";
-import {ActivityIndicator, ScrollView, TouchableWithoutFeedback} from 'react-native';
-
 
 export default class Example extends React.Component {
     constructor(props) {
@@ -40,65 +36,7 @@ export default class Example extends React.Component {
         this._isMounted = true;
         this.setState(() => {
             return {
-                messages: [
-                    {
-                        _id: 4,
-                        text: 'Manhattan',
-                        createdAt: new Date(Date.UTC(2018, 3, 16, 17, 20, 0)),
-                        user: {
-                            _id: 1,
-                            name: 'Developer',
-                        },
-                        sent: true,
-                        received: true,
-                        // location: {
-                        //   latitude: 48.864601,
-                        //   longitude: 2.398704
-                        // },
-                    },
-                    {
-                        _id: 3,
-                        text: 'Where would you like to eat?',
-                        createdAt: new Date(Date.UTC(2018, 3, 16, 17, 20, 0)),
-                        user: {
-                            _id: 2,
-                            name: 'React Native',
-                        },
-                    },
-                    {
-                        _id: 2,
-                        text: 'I need some dining suggestions!',
-                        createdAt: new Date(Date.UTC(2018, 3, 16, 17, 20, 0)),
-                        user: {
-                            _id: 1,
-                            name: 'Developer',
-                        },
-                        sent: true,
-                        received: true,
-                        // location: {
-                        //   latitude: 48.864601,
-                        //   longitude: 2.398704
-                        // },
-                    },
-                    {
-                        _id: 1,
-                        text: 'How can I help you?',
-                        createdAt: new Date(Date.UTC(2018, 3, 16, 17, 20, 0)),
-                        user: {
-                            _id: 2,
-                            name: 'React Native',
-                        },
-                    },
-                    {
-                        _id: 0,
-                        text: 'Hey!',
-                        createdAt: new Date(Date.UTC(2018, 3, 16, 17, 20, 0)),
-                        user: {
-                            _id: 1,
-                            name: 'D',
-                        },
-                    },
-                ]
+                messages: require('./data/messages.js'),
             };
         });
     }
@@ -118,33 +56,7 @@ export default class Example extends React.Component {
             if (this._isMounted === true) {
                 this.setState((previousState) => {
                     return {
-                        messages: GiftedChat.prepend(previousState.messages, [
-                            {
-                                _id: Math.round(Math.random() * 1000000),
-                                text:
-                                    "It uses the same design as React, letting you compose a rich mobile UI from declarative components https://facebook.github.io/react-native/",
-                                createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-                                user: {
-                                    _id: 1,
-                                    name: "Developer"
-                                }
-                            },
-                            {
-                                _id: Math.round(Math.random() * 1000000),
-                                text: "React Native lets you build mobile apps using only JavaScript",
-                                createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-                                user: {
-                                    _id: 1,
-                                    name: "Developer"
-                                }
-                            },
-                            {
-                                _id: Math.round(Math.random() * 1000000),
-                                text: "This is a system message.",
-                                createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-                                system: true
-                            }
-                        ]),
+                        messages: GiftedChat.prepend(previousState.messages, require('./data/old_messages.js')),
                         loadEarlier: false,
                         isLoadingEarlier: false,
                     };
@@ -289,46 +201,25 @@ export default class Example extends React.Component {
         return null;
     }
 
-    _renderHeader() {
-        return (<Header
-            backgroundColor={UIConstants.BG_COLOR_1}
-            leftComponent={{
-                icon: 'navicon',
-                color: '#fff',
-                type: 'font-awesome',
-                onPress: () => this.props.navigation.navigate("DrawerOpen")
-            }}
-            centerComponent={{text: 'RESTAURANT', style: {color: '#fff'}}}
-            rightComponent={{
-                icon: 'plus',
-                color: '#fff',
-                type: 'font-awesome',
-            }}
-        />);
-    }
-
     render() {
         return (
-            <View style={{flex: 1}}>
-                {this._renderHeader()}
-                <GiftedChat
-                    messages={this.state.messages}
-                    onSend={this.onSend}
-                    loadEarlier={this.state.loadEarlier}
-                    onLoadEarlier={this.onLoadEarlier}
-                    isLoadingEarlier={this.state.isLoadingEarlier}
+            <GiftedChat
+                messages={this.state.messages}
+                onSend={this.onSend}
+                loadEarlier={this.state.loadEarlier}
+                onLoadEarlier={this.onLoadEarlier}
+                isLoadingEarlier={this.state.isLoadingEarlier}
 
-                    user={{
-                        _id: 1, // sent messages should have same user._id
-                    }}
+                user={{
+                    _id: 1, // sent messages should have same user._id
+                }}
 
-                    renderActions={this.renderCustomActions}
-                    renderBubble={this.renderBubble}
-                    renderSystemMessage={this.renderSystemMessage}
-                    renderCustomView={this.renderCustomView}
-                    renderFooter={this.renderFooter}
-                />
-            </View>
+                renderActions={this.renderCustomActions}
+                renderBubble={this.renderBubble}
+                renderSystemMessage={this.renderSystemMessage}
+                renderCustomView={this.renderCustomView}
+                renderFooter={this.renderFooter}
+            />
         );
     }
 }
