@@ -1,7 +1,7 @@
 import React from "react";
 import {View} from "react-native";
 import {Card, Button, Header, FormInput, FormValidationMessage} from "react-native-elements";
-import {AccountService, F_USERNAME, F_PASSWORD, F_FAMILY_NAME, F_GIVEN_NAME} from "../services/AccountService";
+import {AccountService, F_USERNAME, F_PASSWORD, F_FAMILY_NAME, F_GIVEN_NAME, F_U} from "../services/AccountService";
 import {UIConstants} from "../UIConstants";
 
 export default class SignUp extends React.Component {
@@ -15,6 +15,7 @@ export default class SignUp extends React.Component {
         if (props.navigation.state.params) {
             this.state[F_USERNAME] = props.navigation.state.params[F_USERNAME];
             this.state[F_PASSWORD] = props.navigation.state.params[F_PASSWORD];
+            this.state[F_U] = props.navigation.state.params[F_U];
         }
     }
 
@@ -27,12 +28,13 @@ export default class SignUp extends React.Component {
 
     _doSignUp() {
         // firstname, lastname, username, password
-        AccountService.signUp(this.state[F_GIVEN_NAME], this.state[F_FAMILY_NAME], this.state[F_USERNAME], this.state[F_PASSWORD])//
+        AccountService.signUp(this.state[F_U], this.state[F_GIVEN_NAME], this.state[F_FAMILY_NAME], this.state[F_USERNAME], this.state[F_PASSWORD])//
         //
             .then(res => {
                 this.props.navigation.navigate("Verification", {
                     [F_USERNAME]: this.state[F_USERNAME],
-                    [F_PASSWORD]: this.state[F_PASSWORD]
+                    [F_PASSWORD]: this.state[F_PASSWORD],
+                    [F_U]: this.state[F_U]
                 });
             }) //
             //
@@ -82,6 +84,16 @@ export default class SignUp extends React.Component {
                             }}
                         />
                         <FormValidationMessage>{this.state.errors ? this.state.errors[F_FAMILY_NAME] : ""}</FormValidationMessage>
+
+                        <FormInput
+                            placeholder="username"
+                            autoCorrect={false}
+                            disabled={this.state.disabled}
+                            onChangeText={(val) => {
+                                this.setState({[F_U]: val});
+                            }}
+                        />
+                        <FormValidationMessage>{this.state.errors ? this.state.errors[F_U] : ""}</FormValidationMessage>
 
                         <FormInput
                             keyboardType="email-address"
