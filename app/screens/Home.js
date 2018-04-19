@@ -12,6 +12,7 @@ import CustomView from './CustomView';
 import {UIConstants} from "../UIConstants";
 import {Card, Header, List, ListItem, Button} from "react-native-elements";
 import {ActivityIndicator, ScrollView, TouchableWithoutFeedback} from 'react-native';
+import MapView from 'react-native-maps';
 
 
 export default class Example extends React.Component {
@@ -22,6 +23,12 @@ export default class Example extends React.Component {
             loadEarlier: true,
             typingText: null,
             isLoadingEarlier: false,
+            region: {
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+            },
         };
 
         this._isMounted = false;
@@ -307,29 +314,34 @@ export default class Example extends React.Component {
         />);
     }
 
+
+    onRegionChange(region) {
+        this.setState({ region });
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
-                {this._renderHeader()}
-                <GiftedChat
-                    messages={this.state.messages}
-                    onSend={this.onSend}
-                    loadEarlier={this.state.loadEarlier}
-                    onLoadEarlier={this.onLoadEarlier}
-                    isLoadingEarlier={this.state.isLoadingEarlier}
+        {this._renderHeader()}
+        <GiftedChat
+        messages={this.state.messages}
+        onSend={this.onSend}
+        loadEarlier={this.state.loadEarlier}
+        onLoadEarlier={this.onLoadEarlier}
+        isLoadingEarlier={this.state.isLoadingEarlier}
 
-                    user={{
-                        _id: 1, // sent messages should have same user._id
-                    }}
+        user={{
+        _id: 1, // sent messages should have same user._id
+        }}
 
-                    renderActions={this.renderCustomActions}
-                    renderBubble={this.renderBubble}
-                    renderSystemMessage={this.renderSystemMessage}
-                    renderCustomView={this.renderCustomView}
-                    renderFooter={this.renderFooter}
-                />
-            </View>
-        );
+        renderActions={this.renderCustomActions}
+        renderBubble={this.renderBubble}
+        renderSystemMessage={this.renderSystemMessage}
+        renderCustomView={this.renderCustomView}
+        renderFooter={this.renderFooter}
+        />
+        </View>
+    );
     }
 }
 
@@ -343,5 +355,8 @@ const styles = StyleSheet.create({
     footerText: {
         fontSize: 14,
         color: '#aaa',
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
     },
 });
