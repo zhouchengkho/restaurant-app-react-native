@@ -110,6 +110,7 @@ export const HomeStack = StackNavigator({
 // SignedIn - Drawer Menu
 
 import Profile from "./screens/Profile";
+import Tinder from "./screens/Tinder";
 import Settings from "./screens/Settings";
 import Tokens from "./screens/Tokens";
 import Wallpaper from "./screens/Wallpaper";
@@ -133,25 +134,13 @@ export const ProfileStack = StackNavigator({
     UpdateProfile: {screen: UpdateProfile}
 }, {
     headerMode: 'none'
-})
+});
 
-export const PaymentMethodStack = StackNavigator({
-    PaymentMethods: {screen: Wallpaper}
+export const TinderStack = StackNavigator({
+    SwipePage: {screen: Tinder},
 }, {
     headerMode: 'none'
-})
-
-export const FamilyMemberStack = StackNavigator({
-    FamilyMembers: {screen: Wallpaper}
-}, {
-    headerMode: 'none'
-})
-
-export const DependentStack = StackNavigator({
-    Dependents: {screen: Wallpaper}
-}, {
-    headerMode: 'none'
-})
+});
 
 export const SignedIn = DrawerNavigator({
     Home: {
@@ -173,6 +162,13 @@ export const SignedIn = DrawerNavigator({
         navigationOptions: {
             drawerLabel: 'Settings',
             drawerIcon: ({tintColor}) => <Icon name="cogs" color={tintColor}/>,
+        }
+    },
+    Tinder: {
+        screen: TinderStack,
+        navigationOptions: {
+            drawerLabel: 'Tinder',
+            drawerIcon: ({tintColor}) => <Icon name="fire" color={tintColor}/>,
         }
     }
 }, {
