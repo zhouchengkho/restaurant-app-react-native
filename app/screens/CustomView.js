@@ -32,7 +32,7 @@ export default class CustomView extends React.Component {
               latitude: this.props.currentMessage.location.latitude,
               longitude: this.props.currentMessage.location.longitude,
               latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              longitudeDelta: 0.0421
             }}
             scrollEnabled={false}
             zoomEnabled={false}
