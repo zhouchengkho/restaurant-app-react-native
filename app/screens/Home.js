@@ -46,6 +46,7 @@ export default class Home extends React.Component {
 
     onSend(messages = []) {
         console.log(messages);
+        // this.props.navigation.navigate('Map', { name: 'Jane' })
         ChatService.sendMessage(this, messages);
         ChatService.lexMessage(this, messages);
     }

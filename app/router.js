@@ -34,6 +34,7 @@ export const createRootNavigator = (signedIn = false) => {
 
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
+import Map from './screens/Map';
 import Verification from './screens/Verification';
 
 export const SignedOut = StackNavigator({
@@ -101,6 +102,9 @@ export const HomeStack = StackNavigator({
     },
     UserView: {
         screen: UserView
+    },
+    Map: {
+        screen: Map
     }
 }, {
     headerMode: 'none'

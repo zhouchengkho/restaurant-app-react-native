@@ -22,5 +22,7 @@ export class UIConstants {
     static GREY_C = '#cccccc';
     static GREY_D = '#dddddd';
     static GREY_E = '#eeeeee';
+    static WHITE = '#ffffff'
+    static TINDER_RED = '#db3076'
 
 }

@@ -14,6 +14,7 @@ export default class App extends React.Component {
     }
 
     componentWillMount() {
+        console.disableYellowBox = true; // disable yellow warning box
         AccountService.resumeSession()//
             .then(res => this.setState({signedIn: res, checkedSignIn: true}))//
             .catch(err => alert("An error occurred: " + err));

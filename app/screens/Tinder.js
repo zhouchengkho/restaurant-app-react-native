@@ -2,11 +2,12 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Dimensions, ImageBackground} from 'react-native';
 import {Header} from "react-native-elements";
 import SwipeCards from 'react-native-swipe-cards';
 import {UIConstants} from "../UIConstants";
 import {TinderService} from "../services/TinderService";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Card extends React.Component {
     constructor(props) {
@@ -15,8 +16,13 @@ class Card extends React.Component {
 
     render() {
         return (
-            <View style={[styles.card, {backgroundColor: this.props.backgroundColor}]}>
-                <Text>{this.props.text}</Text>
+            <View style={{flex: 1}}>
+                <ImageBackground
+                    source={{uri: this.props.image_url}}
+                    style={styles.backgroundImage}>
+                    <Text style={styles.text}>{this.props.name}</Text>
+                    <Text style={styles.text}>{this.props.rating}</Text>
+                </ImageBackground>
             </View>
         )
     }
@@ -54,20 +60,23 @@ export default class extends React.Component {
 
     _renderHeader() {
         return (<Header
-            backgroundColor={UIConstants.BG_COLOR_1}
+            backgroundColor={UIConstants.WHITE}
             leftComponent={{
                 icon: 'close',
-                color: '#fff',
+                color: UIConstants.TINDER_RED,
                 onPress: () => this.props.navigation.navigate("Home")
             }}
-            centerComponent={{text: 'TINDER', style: {color: '#fff'}}}
+            centerComponent={<Icon name="fire" size={30} color={UIConstants.TINDER_RED}/>}
         />);
     }
 
     handleYup (card) {
+        console.log(card);
+        TinderService.like(card.id).then(result => {}).catch(err => {})
         console.log(`Yup for ${card.text}`)
     }
     handleNope (card) {
+        TinderService.dislike(card.id).then(result => {}).catch(err => {})
         console.log(`Nope for ${card.text}`)
     }
     handleMaybe (card) {
@@ -77,7 +86,9 @@ export default class extends React.Component {
         // If you want a stack of cards instead of one-per-one view, activate stack mode
         // stack={true}
         return (
-            <View style={{flex: 1}}>
+            <View style={{
+                flex: 1
+            }}>
                 {this._renderHeader()}
                 <SwipeCards
                     cards={this.state.cards}
@@ -96,12 +107,35 @@ export default class extends React.Component {
 
 const styles = StyleSheet.create({
     card: {
-        justifyContent: 'center',
+        // justifyContent: 'flex-start',
+        flex: 1,
         alignItems: 'center',
-        width: 300,
-        height: 300,
+        width: Dimensions.get('window').width,
+        // height: 300,
     },
     noMoreCardsText: {
         fontSize: 22,
+    },
+    backgroundStyle: {
+        flex: 1,
+        // remove width and height to override fixed static size
+        alignSelf: 'stretch',
+        width: null,
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    backgroundImage:{
+        flex : 1,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        width : Dimensions.get('window').width
+    },
+    text: {
+        alignSelf: 'center',
+        color: UIConstants.WHITE,
+        fontSize: 20
     }
 })
