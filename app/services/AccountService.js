@@ -112,19 +112,19 @@ class AccountServiceImpl {
         return new Promise((resolve, reject) => {
             console.log("AccountService.getSession");
 
-            // this._userPool.getCurrentUser().getSession((err, session) => {
-            //     if (err) {
-            //         reject(err);
-            //         return;
-            //     }
-            //
-            //     resolve(session);
-            // });
-            resolve({
-                idToken: {
-                    jwtToken: ''
+            this._userPool.getCurrentUser().getSession((err, session) => {
+                if (err) {
+                    reject(err);
+                    return;
                 }
-            })
+
+                resolve(session);
+            });
+            // resolve({
+            //     idToken: {
+            //         jwtToken: ''
+            //     }
+            // })
         });
     }
 
@@ -166,24 +166,24 @@ class AccountServiceImpl {
         return new Promise((resolve, reject) => {
             console.log("AccountService.resumeSession");
 
-            // this._userPool.storage.sync((err, result) => {
-            //     if (err) {
-            //         reject(err);
-            //         return;
-            //     }
-            //
-            //     let cognitoUser = this._userPool.getCurrentUser();
-            //
-            //     if (cognitoUser == null) {
-            //         this.signOut().then(res => resolve(res)).catch(err => reject(err));
-            //         return;
-            //     }
-            //
-            //     this._getSession(cognitoUser).then(session => resolve(session)).catch(err => reject(err));
-            // });
-            resolve({
+            this._userPool.storage.sync((err, result) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
 
-            })
+                let cognitoUser = this._userPool.getCurrentUser();
+
+                if (cognitoUser == null) {
+                    this.signOut().then(res => resolve(res)).catch(err => reject(err));
+                    return;
+                }
+
+                this._getSession(cognitoUser).then(session => resolve(session)).catch(err => reject(err));
+            });
+            // resolve({
+            //
+            // })
         });
     }
 

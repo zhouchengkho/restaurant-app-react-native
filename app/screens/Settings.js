@@ -130,14 +130,6 @@ export default class Settings extends React.Component {
                         />
                     </Card>
 
-                    <List>
-                        <ListItem
-                            key='1'
-                            title="Security tokens"
-                            onPress={() => this.props.navigation.navigate("Tokens", {screen: "Tokens"})}
-                        />
-                    </List>
-
                 </View>
             </View>
         );

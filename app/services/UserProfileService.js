@@ -31,8 +31,9 @@ const MOCK_DEP_LIST = [
     MOCK_USERS_MAP['fb0ecb38-3fe4-4ebc-a396-c105cb7ec1d7'],
     MOCK_USERS_MAP['319dabfc-0704-4892-8532-869b94148949']
 ];
+import {Config} from "../config";
 
-const API_BASE = "";
+const API_BASE = Config.API_BASE;
 
 class UserProfileServiceImpl {
 
@@ -152,34 +153,52 @@ class UserProfileServiceImpl {
         return new Promise((resolve, reject) => {
             // console.log("UserProfileService.__getMe()");
             //
-            // AccountService.getSession()
-            //     .then(session => {
-            //
-            //         console.log("ID token: " + session.idToken.jwtToken);
-            //
-            //         // Fetch profile
-            //         fetch(API_BASE + "/me", {
-            //             headers: {Authorization: session.idToken.jwtToken}
-            //         }).then(response => {
-            //             if (response.status === 200) {
-            //                 response.json().then(data => {
-            //                     resolve(data.data);
-            //                 });
-            //             } else {
-            //                 reject("ERR_GET_ME");
-            //             }
-            //         });
-            //     })
-            //     // Catch errors
-            //     .catch(err => {
-            //         console.log(err);
-            //         reject(err);
-            //     });
-            resolve({
-                family_name: 'foo',
-                given_name: 'bar',
-                email: 'foo.bar@gmail.com'
-            })
+            AccountService.getSession()
+                .then(session => {
+
+                    console.log("ID token: " + session.idToken.jwtToken);
+                    console.log(session);
+
+                    fetch(API_BASE + "/me",
+                        {
+                            method: 'POST',
+                            body: JSON.stringify({user_id: session.idToken.payload["cognito:username"]}),
+                            header: {}
+                        })
+                        .then(response => {
+                            response.json().then((data) => {
+                                console.log(data);
+                                resolve({
+                                    family_name: data.data.attributes.family_name,
+                                    given_name: data.data.attributes.given_name,
+                                    email: data.data.attributes.email
+                                });
+                            })
+                            // if (response.status === 200) {
+                            //     response.json().then(data => {
+                            //         console.log("debug");
+                            //         console.log(data);
+                            //         resolve({
+                            //             family_name: 'foo',
+                            //             given_name: 'bar',
+                            //             email: 'foo.bar@gmail.com'
+                            //         });
+                            //     });
+                            // } else {
+                            //     console.log("err");
+                            //     console.log(response);
+                            //     resolve({
+                            //         family_name: 'foo',
+                            //         given_name: 'bar',
+                            //         email: 'foo.bar@gmail.com'
+                            //     });                            }
+                        });
+
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject(err);
+                });
         });
     }
 
