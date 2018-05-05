@@ -61,11 +61,8 @@ export default class extends React.Component {
     _renderHeader() {
         return (<Header
             backgroundColor={UIConstants.WHITE}
-            leftComponent={{
-                icon: 'close',
-                color: UIConstants.TINDER_RED,
-                onPress: () => this.props.navigation.navigate("Home")
-            }}
+            leftComponent={
+                <Icon name="close" size={30} color={UIConstants.TINDER_RED} onPress={() => this.props.navigation.navigate("Home")}/>}
             centerComponent={<Icon name="fire" size={30} color={UIConstants.TINDER_RED}/>}
         />);
     }

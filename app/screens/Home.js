@@ -29,6 +29,21 @@ export default class Home extends React.Component {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
+            markers: [{
+                title: 'hello1',
+                description: '321',
+                latlng: {
+                    latitude: 37.78825,
+                    longitude: -122.4324
+                },
+            }, {
+                title: 'hello2',
+                description: '123',
+                latlng: {
+                    latitude: 37.749771,
+                    longitude: -122.455449
+                },
+            }]
         };
 
         this._isMounted = false;
@@ -49,22 +64,23 @@ export default class Home extends React.Component {
         // this.props.navigation.navigate('Map', { name: 'Jane' })
         ChatService.sendMessage(this, messages);
         ChatService.lexMessage(this, messages);
+        this.props.navigation.navigate('Map');
     }
 
 
     _renderHeader() {
         return (<Header
-            backgroundColor={UIConstants.BG_COLOR_1}
+            backgroundColor={UIConstants.WHITE}
             leftComponent={{
                 icon: 'navicon',
-                color: '#fff',
+                color: UIConstants.TINDER_RED,
                 type: 'font-awesome',
                 onPress: () => this.props.navigation.navigate("DrawerOpen")
             }}
-            centerComponent={{text: 'RESTAURANT', style: {color: '#fff'}}}
+            centerComponent={{text: 'RESTAURANT', style: {color: UIConstants.TINDER_RED}}}
             rightComponent={{
                 icon: 'plus',
-                color: '#fff',
+                color: UIConstants.TINDER_RED,
                 type: 'font-awesome',
             }}
         />);

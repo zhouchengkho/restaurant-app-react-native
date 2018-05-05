@@ -47,10 +47,10 @@ export default class Profile extends React.Component {
 
     _renderHeader() {
         return (<Header
-            backgroundColor={UIConstants.BG_COLOR_1}
+            backgroundColor={UIConstants.WHITE}
             leftComponent={{
                 icon: 'close',
-                color: '#fff',
+                color: UIConstants.TINDER_RED,
                 onPress: () => this.props.navigation.navigate("Home")
             }}
             centerComponent={{text: 'EDIT ACCOUNT', style: {color: '#fff'}}}
@@ -63,7 +63,7 @@ export default class Profile extends React.Component {
                 {this._renderHeader()}
 
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                    <ActivityIndicator size="large" color={UIConstants.BG_COLOR_1}/>
+                    <ActivityIndicator size="large" color={UIConstants.WHITE}/>
                 </View>
             </View>
         );

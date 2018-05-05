@@ -41,10 +41,10 @@ export default class ProviderDetail extends React.Component {
             <View style={{flex: 1}}>
                 <Header
                     style={{flex: 0}}
-                    backgroundColor={UIConstants.BG_COLOR_1}
+                    backgroundColor={UIConstants.WHITE}
                     leftComponent={{
                         icon: 'chevron-left',
-                        color: '#fff',
+                        color: 'UIConstants.TINDER_RED',
                         onPress: () => this.props.navigation.goBack()
                     }}
                     centerComponent={{text: 'USER', style: {color: '#fff'}}}
@@ -137,7 +137,7 @@ const BillTabNavigator = TabNavigator({
     tabBarPosition: 'top',
     animationEnabled: true,
     tabBarOptions: {
-        activeBackgroundColor: UIConstants.BG_COLOR_1,
+        activeBackgroundColor: UIConstants.WHITE,
         activeTintColor: '#fff',
         style: {
             backgroundColor: UIConstants.GREY_E

@@ -59,7 +59,7 @@ export default class SignUp extends React.Component {
         return (
             <View>
                 <Header
-                    backgroundColor={UIConstants.BG_COLOR_1}
+                    backgroundColor={UIConstants.WHITE}
                     centerComponent={{text: 'PAYENT', style: {color: '#fff'}}}
                 />
 

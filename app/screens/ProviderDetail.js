@@ -31,7 +31,7 @@ export default class ProviderDetail extends React.Component {
         return (
             <View>
                 <Header
-                    backgroundColor={UIConstants.BG_COLOR_1}
+                    backgroundColor={UIConstants.WHITE}
                     leftComponent={{
                         icon: 'chevron-left',
                         color: '#fff',
@@ -60,21 +60,21 @@ export default class ProviderDetail extends React.Component {
 
                         <Button
                             style={{marginTop:10}}
-                            backgroundColor={UIConstants.BG_COLOR_1}
+                            backgroundColor={UIConstants.WHITE}
                             icon={{name:'phone', type:'font-awesome'}}
                             title='Call'
                         />
 
                         <Button
                             style={{marginTop:10}}
-                            backgroundColor={UIConstants.BG_COLOR_1}
+                            backgroundColor={UIConstants.WHITE}
                             icon={{name:'envelope', type:'font-awesome'}}
                             title='Email'
                         />
 
                         <Button
                             style={{marginTop:10}}
-                            backgroundColor={UIConstants.BG_COLOR_1}
+                            backgroundColor={UIConstants.WHITE}
                             icon={{name:'globe', type:'font-awesome'}}
                             title='Website'
                         />

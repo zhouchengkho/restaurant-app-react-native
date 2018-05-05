@@ -43,10 +43,10 @@ export default class Settings extends React.Component {
 
     _renderHeader() {
         return (<Header
-            backgroundColor={UIConstants.BG_COLOR_1}
+            backgroundColor={UIConstants.WHITE}
             leftComponent={{
                 icon: 'close',
-                color: '#fff',
+                color: UIConstants.TINDER_RED,
                 onPress: () => this.props.navigation.navigate("Home")
             }}
             centerComponent={{text: 'SETTINGS', style: {color: '#fff'}}}
@@ -59,7 +59,7 @@ export default class Settings extends React.Component {
                 {this._renderHeader()}
 
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                    <ActivityIndicator size="large" color={UIConstants.BG_COLOR_1}/>
+                    <ActivityIndicator size="large" color={UIConstants.WHITE}/>
                 </View>
             </View>
         );
@@ -75,7 +75,7 @@ export default class Settings extends React.Component {
                 </View>
 
                 <Button
-                    backgroundColor={UIConstants.BG_COLOR_1}
+                    backgroundColor={UIConstants.WHITE}
                     title="SIGN OUT"
                     onPress={() => AccountService.signOut() //
                     //
@@ -116,7 +116,7 @@ export default class Settings extends React.Component {
                             </Text>
                         </View>
                         <Button
-                            backgroundColor={UIConstants.BG_COLOR_1}
+                            backgroundColor={UIConstants.WHITE}
                             title="SIGN OUT"
                             onPress={() => AccountService.signOut() //
                             //
