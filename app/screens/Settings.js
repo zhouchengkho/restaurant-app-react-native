@@ -116,7 +116,7 @@ export default class Settings extends React.Component {
                             </Text>
                         </View>
                         <Button
-                            backgroundColor={UIConstants.WHITE}
+                            backgroundColor={UIConstants.TINDER_RED}
                             title="SIGN OUT"
                             onPress={() => AccountService.signOut() //
                             //

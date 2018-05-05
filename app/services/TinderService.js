@@ -260,16 +260,35 @@ class TinderServiceImpl {
         })
     }
 
-    like(restaurantId) {
+    sendLike(restaurantId, like) {
         return new Promise((resolve, reject) => {
-            resolve({});
+            AccountService.getSession().then(session => {
+                fetch(API_BASE + "/preference",
+                    {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            user_id: session.idToken.payload["cognito:username"],
+                            restaurant_id: restaurantId,
+                            like: like
+                        }),
+                        headers: {}
+                    })
+                    .then(response => {
+                        console.log(response);
+                        resolve({})
+                    }).catch(err => {
+                        resolve({})
+                })
+            })
         })
     }
 
+    like(restaurantId) {
+        return this.sendLike(restaurantId, 1);
+    }
+
     dislike(restaurantId) {
-        return new Promise((resolve, reject) => {
-            resolve({});
-        })
+        return this.sendLike(restaurantId, 0);
     }
 }
 

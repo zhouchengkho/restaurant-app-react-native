@@ -78,11 +78,6 @@ export default class Home extends React.Component {
                 onPress: () => this.props.navigation.navigate("DrawerOpen")
             }}
             centerComponent={{text: 'RESTAURANT', style: {color: UIConstants.TINDER_RED}}}
-            rightComponent={{
-                icon: 'plus',
-                color: UIConstants.TINDER_RED,
-                type: 'font-awesome',
-            }}
         />);
     }
 

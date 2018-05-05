@@ -62,7 +62,7 @@ export default class extends React.Component {
         return (<Header
             backgroundColor={UIConstants.WHITE}
             leftComponent={
-                <Icon name="close" size={30} color={UIConstants.TINDER_RED} onPress={() => this.props.navigation.navigate("Home")}/>}
+                <Icon name="close"  size={20} color={UIConstants.TINDER_RED} onPress={() => this.props.navigation.navigate("Home")}/>}
             centerComponent={<Icon name="fire" size={30} color={UIConstants.TINDER_RED}/>}
         />);
     }

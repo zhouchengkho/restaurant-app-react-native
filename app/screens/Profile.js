@@ -75,22 +75,6 @@ export default class Profile extends React.Component {
                 {this._renderHeader()}
 
                 <View style={{paddingVertical: 20}}>
-                    <Card>
-                        <View
-                            style={{
-                                backgroundColor: "#bcbec1",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                width: 80,
-                                height: 80,
-                                borderRadius: 40,
-                                alignSelf: "center",
-                                marginBottom: 20
-                            }}
-                        >
-                        </View>
-                    </Card>
-
                     <List>
                         <ListItem
                             key='1'
