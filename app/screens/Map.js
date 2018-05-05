@@ -25,6 +25,21 @@ export default class Example extends React.Component {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
+            markers: [{
+                title: 'hello1',
+                description: '321',
+                latlng: {
+                    latitude: 37.78825,
+                    longitude: -122.4324
+                },
+            }, {
+                title: 'hello2',
+                description: '123',
+                latlng: {
+                    latitude: 37.749771,
+                    longitude: -122.455449
+                },
+            }]
         };
 
         this._isMounted = false;
@@ -85,15 +100,32 @@ export default class Example extends React.Component {
 
     render() {
         return (
-            <MapView
-                style={styles.map}
-                initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
-            />
+            <View
+                style={{flex: 1}}>
+
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                >
+                    {this.state.markers.map(marker => (
+                        <MapView.Marker
+                            coordinate={marker.latlng}
+                            title={marker.title}
+                            description={marker.description}
+                        />
+                    ))}
+                </MapView>
+                <Button title="back"
+                        onPress={() =>
+                            this.props.navigation.goBack()
+                        }
+                />
+            </View>
         );
     }
 }
