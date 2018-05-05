@@ -31,7 +31,7 @@ export default class UpdateProfile extends React.Component {
 
     _renderHeader() {
         return (<Header
-            backgroundColor={UIConstants.BG_COLOR_1}
+            backgroundColor={UIConstants.WHITE}
             leftComponent={{
                 icon: 'close',
                 color: '#fff',

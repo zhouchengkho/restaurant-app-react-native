@@ -75,7 +75,7 @@ export default class Verification extends React.Component {
         return (
             <View>
                 <Header
-                    backgroundColor={UIConstants.BG_COLOR_1}
+                    backgroundColor={UIConstants.WHITE}
                     centerComponent={{text: 'RESTAURANT', style: {color: '#fff'}}}
                 />
 

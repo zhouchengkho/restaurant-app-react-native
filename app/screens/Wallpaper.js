@@ -9,7 +9,7 @@ export default class Wallpaper extends Component {
         return (
             <View>
                 <Header
-                    backgroundColor='#50B242'
+                    backgroundColor='UIConstants.WHITE'
                     leftComponent={{
                         icon: 'close',
                         color: '#fff',

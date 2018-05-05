@@ -54,17 +54,17 @@ export default class Home extends React.Component {
 
     _renderHeader() {
         return (<Header
-            backgroundColor={UIConstants.BG_COLOR_1}
+            backgroundColor={UIConstants.WHITE}
             leftComponent={{
                 icon: 'navicon',
-                color: '#fff',
+                color: UIConstants.TINDER_RED,
                 type: 'font-awesome',
                 onPress: () => this.props.navigation.navigate("DrawerOpen")
             }}
-            centerComponent={{text: 'RESTAURANT', style: {color: '#fff'}}}
+            centerComponent={{text: 'RESTAURANT', style: {color: UIConstants.TINDER_RED}}}
             rightComponent={{
                 icon: 'plus',
-                color: '#fff',
+                color: UIConstants.TINDER_RED,
                 type: 'font-awesome',
             }}
         />);
