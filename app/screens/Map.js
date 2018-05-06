@@ -11,8 +11,9 @@ import CustomActions from './CustomActions';
 import CustomView from './CustomView';
 import {UIConstants} from "../UIConstants";
 import {Card, Header, List, ListItem, Button} from "react-native-elements";
-import {ActivityIndicator, ScrollView, TouchableWithoutFeedback} from 'react-native';
+import {ActivityIndicator, ScrollView, TouchableWithoutFeedback, Image, WebView} from 'react-native';
 import MapView from 'react-native-maps';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default class Example extends React.Component {
@@ -75,27 +76,20 @@ export default class Example extends React.Component {
         return null;
     }
 
+    onRegionChange(region) {
+        this.setState({ region });
+    }
+
     _renderHeader() {
         return (<Header
             backgroundColor={UIConstants.WHITE}
             leftComponent={{
-                icon: 'navicon',
-                color: '#fff',
-                type: 'font-awesome',
-                onPress: () => this.props.navigation.navigate("DrawerOpen")
+                icon: 'close',
+                color: UIConstants.TINDER_RED,
+                onPress: () => this.props.navigation.goBack()
             }}
-            centerComponent={{text: 'RESTAURANT', style: {color: '#fff'}}}
-            rightComponent={{
-                icon: 'plus',
-                color: '#fff',
-                type: 'font-awesome',
-            }}
+            centerComponent={<Icon name="map" size={30} color={UIConstants.TINDER_RED}/>}
         />);
-    }
-
-
-    onRegionChange(region) {
-        this.setState({ region });
     }
 
     render() {
@@ -115,16 +109,16 @@ export default class Example extends React.Component {
                     {this.state.markers.map(marker => (
                         <MapView.Marker
                             coordinate={marker.latlng}
-                            title={marker.title}
-                            description={marker.description}
-                        />
+                        >
+                            <MapView.Callout>
+                                <Text>{marker.title}</Text>
+                                <Text>{marker.description}</Text>
+                                <Image resizeMode="contain" source={{uri: "https://media.istockphoto.com/photos/slice-of-hot-pizza-picture-id519526540"}} style={{height: 150, width: 150}} />
+                            </MapView.Callout>
+                        </MapView.Marker>
                     ))}
                 </MapView>
-                <Button title="back"
-                        onPress={() =>
-                            this.props.navigation.goBack()
-                        }
-                />
+                {this._renderHeader()}
             </View>
         );
     }
