@@ -14,6 +14,7 @@ import {Card, Header, List, ListItem, Button} from "react-native-elements";
 import {ActivityIndicator, ScrollView, TouchableWithoutFeedback} from 'react-native';
 import MapView from 'react-native-maps';
 import {ChatService} from '../services/ChatService';
+import {MockService} from "../services/MockService";
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -64,7 +65,7 @@ export default class Home extends React.Component {
         // this.props.navigation.navigate('Map', { name: 'Jane' })
         ChatService.sendMessage(this, messages);
         ChatService.lexMessage(this, messages);
-        this.props.navigation.navigate('Map');
+        this.props.navigation.navigate('Map', MockService.getFakeMapData());
     }
 
 

@@ -27,6 +27,32 @@ class MockServiceImpl {
             )
         })
     }
+
+    getFakeMapData() {
+        return {
+            region: {
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+            },
+            markers: [{
+                title: 'hello1',
+                description: '321',
+                latlng: {
+                    latitude: 37.78825,
+                    longitude: -122.4324
+                },
+            }, {
+                title: 'hello2',
+                description: '123',
+                latlng: {
+                    latitude: 37.749771,
+                    longitude: -122.455449
+                },
+            }]
+        }
+    }
 }
 
 export const MockService = new MockServiceImpl();

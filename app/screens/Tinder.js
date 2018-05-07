@@ -2,12 +2,14 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, Image, Dimensions, ImageBackground} from 'react-native';
+import {StyleSheet, Text, View, Image, Dimensions, ImageBackground, Button} from 'react-native';
 import {Header} from "react-native-elements";
 import SwipeCards from 'react-native-swipe-cards';
 import {UIConstants} from "../UIConstants";
 import {TinderService} from "../services/TinderService";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {AccountService} from "../services/AccountService";
+import {MockService} from "../services/MockService";
 
 class Card extends React.Component {
     constructor(props) {
@@ -35,8 +37,14 @@ class NoMoreCards extends Component {
 
     render() {
         return (
-            <View>
-                <Text style={styles.noMoreCardsText}>No more cards</Text>
+            <View style={{backgroundColor: UIConstants.TINDER_RED}}>
+                <Button
+                    color={UIConstants.WHITE}
+                    title="Recommend Me somme good stuff!"
+                    onPress={() => {
+                        this.props.navigation.navigate("Map", MockService.getFakeMapData())
+                    }}
+                />
             </View>
         )
     }
@@ -90,7 +98,7 @@ export default class extends React.Component {
                 <SwipeCards
                     cards={this.state.cards}
                     renderCard={(cardData) => <Card {...cardData} />}
-                    renderNoMoreCards={() => <NoMoreCards />}
+                    renderNoMoreCards={() => <NoMoreCards {...this.props} />}
 
                     handleYup={this.handleYup}
                     handleNope={this.handleNope}

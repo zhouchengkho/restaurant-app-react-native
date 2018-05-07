@@ -142,6 +142,7 @@ export const ProfileStack = StackNavigator({
 
 export const TinderStack = StackNavigator({
     SwipePage: {screen: Tinder},
+    Map: {screen: Map}
 }, {
     headerMode: 'none'
 });

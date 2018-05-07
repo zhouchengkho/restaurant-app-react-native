@@ -16,33 +16,10 @@ import MapView from 'react-native-maps';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-export default class Example extends React.Component {
-    constructor(props) {
+export default class Map extends React.Component {
+    constructor(props, context) {
         super(props);
-        this.state = {
-            region: {
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            },
-            markers: [{
-                title: 'hello1',
-                description: '321',
-                latlng: {
-                    latitude: 37.78825,
-                    longitude: -122.4324
-                },
-            }, {
-                title: 'hello2',
-                description: '123',
-                latlng: {
-                    latitude: 37.749771,
-                    longitude: -122.455449
-                },
-            }]
-        };
-
+        this.state = props.navigation.state.params;
         this._isMounted = false;
     }
 
