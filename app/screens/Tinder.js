@@ -10,6 +10,8 @@ import {TinderService} from "../services/TinderService";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {AccountService} from "../services/AccountService";
 import {MockService} from "../services/MockService";
+import {MapService} from "../services/MapService";
+
 
 class Card extends React.Component {
     constructor(props) {
@@ -42,7 +44,11 @@ class NoMoreCards extends Component {
                     color={UIConstants.WHITE}
                     title="Recommend Me somme good stuff!"
                     onPress={() => {
-                        this.props.navigation.navigate("Map", MockService.getFakeMapData())
+                        TinderService.getRestaurants().then(cards => {
+                            this.props.navigation.navigate("Map", MapService.handleAttributesFromTinder(cards));
+                        }).catch(err => {
+                            this.props.navigation.navigate("Map", MapService.handleAttributesFromTinder([]));
+                        })
                     }}
                 />
             </View>

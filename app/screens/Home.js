@@ -15,12 +15,24 @@ import {ActivityIndicator, ScrollView, TouchableWithoutFeedback} from 'react-nat
 import MapView from 'react-native-maps';
 import {ChatService} from '../services/ChatService';
 import {MockService} from "../services/MockService";
+const uuid = require("uuid");
 
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: [],
+            messages: [
+                {
+                    _id: uuid.v4(),
+                    text: "Hey there, how can I help you today?",
+                    createdAt: new Date(),
+                    user: {
+                        _id: 2,
+                        name: 'React Native',
+                        // avatar: 'https://facebook.github.io/react/img/logo_og.png',
+                    },
+                }
+            ],
             loadEarlier: true,
             typingText: null,
             isLoadingEarlier: false,
@@ -85,9 +97,6 @@ export default class Home extends React.Component {
                 <GiftedChat
                     messages={this.state.messages}
                     onSend={this.onSend}
-                    loadEarlier={this.state.loadEarlier}
-                    onLoadEarlier={this.onLoadEarlier}
-                    isLoadingEarlier={this.state.isLoadingEarlier}
 
                     user={{
                         _id: 1
