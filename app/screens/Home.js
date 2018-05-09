@@ -30,21 +30,19 @@ export default class Home extends React.Component {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
-            markers: [{
-                title: 'hello1',
-                description: '321',
-                latlng: {
-                    latitude: 37.78825,
-                    longitude: -122.4324
-                },
-            }, {
-                title: 'hello2',
-                description: '123',
-                latlng: {
-                    latitude: 37.749771,
-                    longitude: -122.455449
-                },
-            }]
+            markers: [
+                {
+                    id: "HScFap2SwbUlfC-QXVkxFA",
+                    name: "Xi'an Famous Foods",
+                    coordinate: {
+                        lat: "37.78825",
+                        lng: "-122.4324"
+                    },
+                    rating: "4",
+                    review_count: "1306",
+                    image_url: "https://s3-media2.fl.yelpcdn.com/bphoto/GI5MSKJdeG5PXLlbwwzt8A/o.jpg"
+                }
+            ]
         };
 
         this._isMounted = false;
@@ -62,10 +60,8 @@ export default class Home extends React.Component {
 
     onSend(messages = []) {
         console.log(messages);
-        // this.props.navigation.navigate('Map', { name: 'Jane' })
         ChatService.sendMessage(this, messages);
         ChatService.lexMessage(this, messages);
-        this.props.navigation.navigate('Map', MockService.getFakeMapData());
     }
 
 

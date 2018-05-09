@@ -77,20 +77,21 @@ export default class Map extends React.Component {
                 <MapView
                     style={styles.map}
                     initialRegion={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
+                        latitude: this.state.region.latitude,
+                        longitude: this.state.region.longitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
                     }}
                 >
                     {this.state.markers.map(marker => (
                         <MapView.Marker
-                            coordinate={marker.latlng}
+                            coordinate={marker.coordinate}
                         >
                             <MapView.Callout>
-                                <Text>{marker.title}</Text>
-                                <Text>{marker.description}</Text>
-                                <Image resizeMode="contain" source={{uri: "https://media.istockphoto.com/photos/slice-of-hot-pizza-picture-id519526540"}} style={{height: 150, width: 150}} />
+                                <Text>{marker.name}</Text>
+                                <Text>{marker.address}</Text>
+                                <Text>{marker.phone}</Text>
+                                <Image resizeMode="contain" source={{uri: marker.image}} style={{height: 150, width: 150}} />
                             </MapView.Callout>
                         </MapView.Marker>
                     ))}
