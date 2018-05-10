@@ -69,8 +69,8 @@ export default class SignIn extends React.Component {
         return (
             <View>
                 <Header
-                    backgroundColor={UIConstants.BG_COLOR_1}
-                    centerComponent={{text: 'RESTAURANT', style: {color: '#fff'}}}
+                    backgroundColor={UIConstants.WHITE}
+                    centerComponent={{text: 'RESTAURANT', style: {color: UIConstants.TINDER_RED}}}
                 />
 
                 <View style={{paddingVertical: 20}}>

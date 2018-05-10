@@ -20,13 +20,13 @@ export default class ForgotPassword extends React.Component{
 
     _renderHeader() {
         return (<Header
-            backgroundColor={UIConstants.BG_COLOR_1}
+            backgroundColor={UIConstants.WHITE}
             leftComponent={{
                 icon: 'close',
-                color: '#fff',
+                color: UIConstants.TINDER_RED,
                 onPress: () => this.props.navigation.goBack(),
             }}
-            centerComponent={{text: "Forgotten Password", style: {color: '#fff'}}}
+            centerComponent={{text: "Forgotten Password", style: {color: UIConstants.TINDER_RED}}}
         />);
     }
 
